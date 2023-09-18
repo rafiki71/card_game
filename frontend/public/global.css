@@ -1,0 +1,64 @@
+html, body {
+	position: relative;
+	width: 100%;
+	height: 100%;
+    background-color: #1a1a2e; /* Dunkelblauer Hintergrund */
+	color: #f0f0f0; /* Helle Schriftfarbe für besseren Kontrast */
+}
+
+body {
+	margin: 0;
+	padding: 8px;
+	box-sizing: border-box;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+a {
+	color: rgb(144, 238, 144); /* Helleres Blau für Links */
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:visited {
+	color: rgb(100, 218, 100); /* Ein dunklerer Ton für besuchte Links */
+}
+
+label {
+	display: block;
+}
+
+input, button, select, textarea {
+	font-family: inherit;
+	font-size: inherit;
+	-webkit-padding: 0.4em 0;
+	padding: 0.4em;
+	margin: 0 0 0.5em 0;
+	box-sizing: border-box;
+	border: 1px solid #aaa; /* Etwas dunklerer Rand für Inputs */
+	border-radius: 2px;
+}
+
+input:disabled {
+	color: #aaa; /* Dunklere Farbe für deaktivierte Eingabefelder */
+}
+
+button {
+	color: #333;
+	background-color: #2a2a3e; /* Dunklerer Button-Hintergrund */
+	outline: none;
+}
+
+button:disabled {
+	color: #999;
+}
+
+button:not(:disabled):active {
+	background-color: #3a3a4e; /* Ein noch dunklerer Button, wenn er aktiv ist */
+}
+
+button:focus {
+	border-color: #666;
+}
