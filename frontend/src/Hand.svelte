@@ -1,18 +1,26 @@
 <script>
+    import { selectedCardsStore } from './selectedCardsStore.js';
     import Card from './Card.svelte';
 
     export let karten = [];
 
-    let selectedCards = new Set();  // Set, um die ausgewählten Karten zu speichern
+    let selectedCards = new Set();
+
+    selectedCardsStore.subscribe(value => {
+        selectedCards = value;
+    });
 
     function toggleCardSelection(card) {
-        let cardIdentifier = card.wert + card.farbe;
-        if (selectedCards.has(cardIdentifier)) {
-            selectedCards.delete(cardIdentifier);
+        const cardAsJson = JSON.stringify(card); // Objekt zu JSON-String konvertieren
+
+        if (selectedCards.has(cardAsJson)) {
+            selectedCards.delete(cardAsJson);
         } else {
-            selectedCards.add(cardIdentifier);
+            selectedCards.add(cardAsJson);
         }
-        selectedCards = new Set([...selectedCards]);  // Aktualisieren, um eine Reaktivität zu erzwingen
+
+        // Aktualisieren Sie den Store mit dem neuen Zustand
+        selectedCardsStore.set(new Set([...selectedCards]));
     }
 </script>
 
@@ -40,7 +48,7 @@
 <div class="hand">
     {#each karten as karte (karte.wert + karte.farbe)}
         <div
-            class="card-container {selectedCards.has(karte.wert + karte.farbe) ? 'selected' : ''}"
+            class="card-container {selectedCards.has(JSON.stringify(karte)) ? 'selected' : ''}" 
             on:click={() => toggleCardSelection(karte)}>
             <Card farbe={karte.farbe} wert={karte.wert} />
         </div>

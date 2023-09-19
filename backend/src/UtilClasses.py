@@ -1,36 +1,13 @@
-from enum import Enum
 import random
-
-
-class Kartenfarbe(Enum):
-    HERZ = "Herz"
-    KARO = "Karo"
-    PIK = "Pik"
-    KREUZ = "Kreuz"
-
-
-class Karte:
-    def __init__(self, farbe: Kartenfarbe, wert: str):
-        self.farbe = farbe
-        self.wert = wert
-    
-    def to_dict(self):
-        return {
-            "farbe": self.farbe.value,
-            "wert": self.wert
-        }
-
-    def __repr__(self):
-        return f"{self.wert} von {self.farbe.value}"
-
 
 class Deck:
     def __init__(self):
         self.karten = self._initialisiere_deck()
 
     def _initialisiere_deck(self):
+        farben = ["Herz", "Karo", "Pik", "Kreuz"]
         werte = ["7", "8", "9", "10", "Bube", "Dame", "König", "Ass"]
-        return [Karte(farbe, wert) for farbe in Kartenfarbe for wert in werte]
+        return [{"farbe": farbe, "wert": wert} for farbe in farben for wert in werte]
 
     def mischen(self):
         random.shuffle(self.karten)
@@ -54,25 +31,24 @@ class Spieler:
         self.hand = []
         self.status = None  # Kann später durch "Präsident", "Pieper" usw. ersetzt werden
 
-    def karten_ausspielen(self, karten: [Karte]):
+    def karten_ausspielen(self, karten: [dict]):
         if not karten:
             return None
 
         # Prüfen, ob alle Karten den gleichen Wert haben
-        erstes_karten_wert = karten[0].wert
-        if not all(karte.wert == erstes_karten_wert for karte in karten):
-            return None
+        erstes_karten_wert = karten[0]['wert']
+        if not all(karte['wert'] == erstes_karten_wert for karte in karten):
+            return None, f"Karten haben nicht den gleichen Wert {erstes_karten_wert} {karten}"
 
         # Prüfen, ob alle Karten in der Hand des Spielers sind
         if not all(karte in self.hand for karte in karten):
-            return None
+            return None, f"Karten nicht in der Hand. {self.hand} {karten}"
 
         # Karten aus der Hand des Spielers entfernen
         for karte in karten:
             self.hand.remove(karte)
 
-        return karten
-
+        return karten, ""
 
     def karten_erhalten(self, karten: list):
         self.hand.extend(karten)
@@ -83,4 +59,4 @@ class Spieler:
         return abgegebene_karten
 
     def __repr__(self):
-        return f"Spieler {self.spieler_id} mit {len(self.hand)} Karten"
+        return f"Spieler {self.name} mit {len(self.hand)} Karten"

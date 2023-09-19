@@ -1,6 +1,6 @@
 # Game.py
 from enum import Enum
-from src.UtilClasses import Kartenfarbe, Karte, Deck, Spieler
+from src.UtilClasses import Deck, Spieler
 # Hier können die Klassen Karte, Deck und Spieler eingefügt oder importiert werden, falls sie in separaten Dateien sind.
 
 class Spielstatus(Enum):
@@ -28,7 +28,6 @@ class Game:
         
         self.spieler.append(spieler)
         return True, ""
-            
 
     def karten_verteilen(self):
         self.deck.mischen()
@@ -37,17 +36,11 @@ class Game:
             spieler.karten_erhalten([self.deck.karte_ziehen() for _ in range(karten_pro_spieler)])
         self.ausgelegte_karten = []
 
-        if len(self.deck) % len(self.spieler) != 0:
-            spezielle_karten = [Karte(Kartenfarbe.HERZ, "7"), Karte(Kartenfarbe.KARO, "7")]
-            for karte in spezielle_karten:
-                if karte in self.deck.karten:
-                    self.deck.karten.remove(karte)
-
     def finde_startspieler(self):
         for index, spieler in enumerate(self.spieler):
-            if Karte(Kartenfarbe.KARO, "7") in spieler.hand:
+            if {"farbe": "Karo", "wert": "7"} in spieler.hand:
                 return index
-            elif Karte(Kartenfarbe.PIK, "7") in spieler.hand:
+            elif {"farbe": "Pik", "wert": "7"} in spieler.hand:
                 return index
         return 0
 
@@ -60,20 +53,25 @@ class Game:
         self.status = Spielstatus.IM_GANG
         return True, ""
 
-    def karten_von_spieler_ausspielen(self, spieler_index, karten):
-        if spieler_index != self.aktueller_spieler_index:
-            return False  # Nicht der Zug des Spielers
+    def spieler_mit_name(self, name):
+        for spieler in self.spieler:
+            if spieler.name == name:
+                return spieler
+        return None
 
-        aktueller_spieler = self.spieler[spieler_index]
-        gespielte_karten = aktueller_spieler.karten_ausspielen(karten)
+    def karten_von_spieler_ausspielen(self, spieler_name, karten):
+        if spieler_name != self.spieler[self.aktueller_spieler_index].name:
+            return False, f'Falscher Spieler {spieler_name}'  # Nicht der Zug des Spielers
+
+        aktueller_spieler = self.spieler_mit_name(spieler_name)
+        gespielte_karten, msg = aktueller_spieler.karten_ausspielen(karten)
 
         if gespielte_karten:
-            self.ausgelegte_karten.extend(gespielte_karten)
+            self.ausgelegte_karten = gespielte_karten
             # Überprüfen, ob der Spieler gewonnen hat oder andere Spiellogiken
+        else:
+            return False, msg
 
         # Den nächsten Spieler bestimmen
         self.aktueller_spieler_index = (self.aktueller_spieler_index + 1) % len(self.spieler)
-        return True
-
-    # Weitere Spielmethoden können hier hinzugefügt werden.
-
+        return True, ""
