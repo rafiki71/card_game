@@ -22,11 +22,18 @@
         flex-direction: row;
         gap: 10px;
         overflow-x: auto; 
-        padding: 20px;
+        padding: 30px 20px 20px 20px; /* Erhöht den oberen Abstand */
+        justify-content: center;  /* Zentriert die Karten horizontal */
+        width: 100%; 
+    }
+
+    .card-container {
+        transform: scale(1.2);  /* Vergrößert die Karte um 20% */
+        transition: transform 0.3s ease;  /* Fügt eine sanfte Übergangsanimation hinzu */
     }
 
     .selected {
-        margin-top: -10px;
+        transform: scale(1.2) translateY(-10px); /* Kombiniert das Anheben mit der Vergrößerung */
     }
 </style>
 
