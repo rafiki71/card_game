@@ -22,21 +22,27 @@
         font-family: Arial, sans-serif;
         text-align: center;
         position: relative;
-        background-color: #eae7dc; /* Ein weicher beiger Hintergrund */
-        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+        background: transparent; /* Transparenter Hintergrund */
         transition: transform 0.2s;
+        
+        /* Neon-Blau-Stil, aber subtiler */
+        border: 2px solid rgba(0, 255, 255, 0.5);
+        box-shadow: 
+            0 0 5px rgba(0, 255, 255, 0.5),
+            0 0 10px rgba(0, 255, 255, 0.5);
+    }
+
+    /* Neon-Effekt auf Text und Symbole */
+    .card .suit-symbol, .card .card-value {
+        text-shadow: 
+            0 0 5px rgba(0, 255, 255, 0.5),
+            0 0 10px rgba(0, 255, 255, 0.5),
+            0 0 15px #00ffff;
+        color: rgba(0, 255, 255, 0.5);
     }
 
     .card:hover {
         transform: scale(1.05);
-    }
-
-    .card.suit-herz, .card.suit-karo {
-        color: #e85a4f; /* Ein tieferes Rot */
-    }
-
-    .card.suit-kreuz, .card.suit-pik {
-        color: #6b705c; /* Ein weiches Grau/Schwarz */
     }
 
     .suit-symbol {
@@ -44,14 +50,16 @@
         user-select: none;
     }
 
-    .suit-symbol.top-left {
+    .suit-symbol.top-left, .suit-symbol.bottom-right {
         position: absolute;
+    }
+
+    .suit-symbol.top-left {
         top: 10px;
         left: 10px;
     }
 
     .suit-symbol.bottom-right {
-        position: absolute;
         bottom: 10px;
         right: 10px;
     }
@@ -64,19 +72,6 @@
         font-size: 24px;
         font-weight: bold;
         user-select: none;
-    }
-
-    /* Ein leichter Gradient im Hintergrund für eine bessere Tiefe */
-    .card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: -1;
-        border-radius: 8px;
-        background: linear-gradient(45deg, #d8c3a5 0%, #e2d4b5 100%);
     }
 </style>
 
