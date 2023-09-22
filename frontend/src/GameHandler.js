@@ -1,6 +1,6 @@
 class GameHandler {
     constructor() {
-        this.baseURL = 'http://localhost:5000';  // Passen Sie die URL und den Port entsprechend Ihrer Konfiguration an
+        this.baseURL = 'http://23.137.248.132:1337';  // Passen Sie die URL und den Port entsprechend Ihrer Konfiguration an
     }
 
     async spielErstellen(name) {

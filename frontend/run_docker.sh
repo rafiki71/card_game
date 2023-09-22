@@ -1,1 +1,1 @@
-docker run --rm -p 8080:8080 --net=host -v $(pwd):/app svelte-dev-env
+docker run --rm --env HOST=0.0.0.0 -p 8080:8080 --net=host -v $(pwd):/app svelte-dev-env

@@ -18,7 +18,7 @@ ENV FLASK_ENV=development
 ENV FLASK_APP=src/app.py
 
 # Exponiert den Port 5000 (standardmäßiger Flask-Port) des Containers
-EXPOSE 5000
+EXPOSE 1337
 
 # Kommando, das beim Start des Containers ausgeführt wird
-CMD ["flask", "run", "--host=0.0.0.0"]
+CMD ["flask", "run", "--host=0.0.0.0", "--port=1337"]

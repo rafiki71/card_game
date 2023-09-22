@@ -1,1 +1,1 @@
-docker run -p 5000:5000 mein_flask_spiel
+docker run --env HOST=0.0.0.0 --net=host -p 1337:1337 mein_flask_spiel
