@@ -112,7 +112,7 @@ def spielstatus_abrufen():
     return jsonify({
         'status': spiel.status.name,
         'ausgelegte_karten': ausgelegte_karten,
-        'anzahl_spieler': len(spiel.spieler),
+        'spieler': [s.name for s in spiel.spieler],
         'aktueller_spieler': spiel.aktueller_spieler_index,
         'spieler_kartenanzahl': spieler_kartenanzahl,
         'meine_karten': meine_karten
