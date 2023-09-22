@@ -73,14 +73,13 @@ class Game:
         aktueller_spieler = self.spieler_mit_name(spieler_name)
 
         if len(karten) == 0:#passen
-            self.aktueller_spieler_index = (self.aktueller_spieler_index + 1) % len(self.spieler)
             self._anzahl_pass += 1
 
             if self._anzahl_pass == len(self.spieler) - 1:
                 self.ausgelegte_karten = []
                 self._anzahl_pass = 0
-                self.aktueller_spieler_index = (self.aktueller_spieler_index + 1) % len(self.spieler)
 
+            self.aktueller_spieler_index = (self.aktueller_spieler_index + 1) % len(self.spieler)
             return True, ""
         self._anzahl_pass = 0
         
